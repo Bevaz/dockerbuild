@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+PORT=5554
+
+start() {
+  echo "Starting emulator using port $PORT..."
+  emulator64-arm -avd emul-android-4.2 -no-skin -no-audio -no-window -port $PORT &
+  wait
+}
+
+wait() {
+  echo "Waiting for emulator to start..."
+
+  bootanim=""
+  failcounter=0
+  until [ "X${bootanim:0:7}" = "Xrunning" ]; do
+     bootanim=`adb -e shell getprop init.svc.bootanim 2>&1`
+	 echo "Read bootanim property: <$bootanim>"
+     if [ "X{bootanim:0:9}" != "Xnot found" ]; then
+        let "failcounter += 1"
+        if [ $failcounter -gt 30 ]; then
+          echo "Failed to start emulator"
+          exit 1
+        fi
+     fi
+     sleep 1
+  done
+}
+
+case "$1" in
+start)
+    echo "Start Android Emulator"
+    start
+    ;;
+wait)
+    echo  "Wait for Android Emulator"
+    wait
+    ;;
+*)
+    echo "Usage $0 start|wait"
+    ;;
+esac
