@@ -3,8 +3,9 @@ FROM shippableimages/ubuntu1404_base
 MAINTAINER Bevaz "The.Bevaz@gmail.com"
 
 RUN dpkg --add-architecture i386
+RUN echo | add-apt-repository ppa:webupd8team/java
 RUN apt-get update
-RUN apt-get install -y  --no-install-recommends p7zip-full python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 default-jre-headless wget ant
+RUN apt-get install -y --no-install-recommends p7zip-full unzip python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 wget ant oracle-java8-installer
 RUN pip install cython
 
 WORKDIR /opt
