@@ -4,7 +4,7 @@ MAINTAINER Bevaz "The.Bevaz@gmail.com"
 
 RUN dpkg --add-architecture i386
 RUN apt-get update
-RUN apt-get install -y  --no-install-recommends p7zip-full python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 default-jre-headless wget
+RUN apt-get install -y  --no-install-recommends p7zip-full python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 default-jre-headless wget ant
 RUN pip install cython
 
 WORKDIR /opt
