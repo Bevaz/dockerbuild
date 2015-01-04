@@ -34,6 +34,10 @@ wait)
      echo  "Wait for Android Emulator"
      wait
      ;;
+stop)
+     echo  "Stopping Android Emulator"
+     kill `pidof emulator64-arm`
+     ;;
 *)
      echo "Usage $0 start|wait"
      ;;
