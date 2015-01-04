@@ -9,7 +9,8 @@ RUN pip install cython
 
 WORKDIR /opt
 RUN wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin
-RUN 7z x android-ndk-r10d-linux-x86_64.bin
+ADD ndk-exclude.txt /opt/ndk-exclude.txt
+RUN 7z x -xr@ndk-exclude.txt android-ndk-r10d-linux-x86_64.bin
 ADD statvfs.h /opt/android-ndk-r10d/platforms/android-14/arch-arm/usr/include/sys/statvfs.h
 
 RUN wget http://dl.google.com/android/android-sdk_r24.0.2-linux.tgz
