@@ -23,7 +23,9 @@ RUN echo yes | android update sdk -u -a -t platform-tools
 RUN echo yes | android update sdk -u -a -t build-tools-21.1.2
 RUN echo yes | android update sdk -u -a -t android-14
 RUN echo yes | android update sdk -u -a -t sys-img-armeabi-v7a-android-14
+RUN echo yes | android update sdk -u -a -t android-21
+RUN echo yes | android update sdk -u -a -t sys-img-armeabi-v7a-android-21
 
 ENV ANDROID_AVD_HOME /root/.android/avd/
-RUN android create avd --force -n emul-android-4.2 -t android-14 -d tv_1080p -c 512M
+RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M
 ADD android-emulator /usr/local/bin/android-emulator

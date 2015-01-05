@@ -4,7 +4,7 @@ PORT=5554
 
 start() {
      echo "Starting emulator using port $PORT..."
-     emulator64-arm -avd emul-android-4.2 -no-skin -no-audio -no-window -port $PORT &
+     emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -no-window -port $PORT &
      wait
 }
 
@@ -14,7 +14,7 @@ wait() {
      boot_completed=`adb -e shell getprop sys.boot_completed 2>&1`
      timeout=0
      until [ "X${boot_completed:0:1}" = "X1" ]; do
-          sleep 5
+          sleep 10
           boot_completed=`adb -e shell getprop sys.boot_completed 2>&1`
 	      echo "Read boot_completed property: <$boot_completed>"
           let "timeout += 1"
