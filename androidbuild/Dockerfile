@@ -24,7 +24,6 @@ RUN echo yes | android update sdk -u -a -t platform-tools,build-tools-21.1.2,and
 ENV ANDROID_AVD_HOME /root/.android/avd/
 RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M --abi armeabi-v7a
 
-ENV LD_LIBRARY_PATH=$ANDROID_HOME/tools/lib:$LD_LIBRARY_PATH
 ADD android-emulator /usr/local/bin/android-emulator
 RUN android-emulator start
 RUN android-emulator stop
