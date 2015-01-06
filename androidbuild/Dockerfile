@@ -6,7 +6,7 @@ RUN dpkg --add-architecture i386
 RUN echo | add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y --no-install-recommends p7zip-full unzip python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 wget ant oracle-java8-installer zlib1g-dev unzip libssl-dev libpcre3-dev zlib1g-dev
+RUN apt-get install -y --no-install-recommends p7zip-full unzip python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 wget ant oracle-java8-installer zlib1g-dev unzip libssl-dev libpcre3-dev zlib1g-dev libsqlite3-dev xvfb
 RUN pip install cython
 
 WORKDIR /opt
@@ -25,7 +25,14 @@ RUN echo yes | android update sdk -u -a -t android-14
 RUN echo yes | android update sdk -u -a -t sys-img-armeabi-v7a-android-14
 RUN echo yes | android update sdk -u -a -t android-21
 RUN echo yes | android update sdk -u -a -t sys-img-armeabi-v7a-android-21
-
+ 
 ENV ANDROID_AVD_HOME /root/.android/avd/
-RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M
+RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M --abi armeabi-v7a
+
+ENV LD_LIBRARY_PATH=$ANDROID_HOME/tools/lib:$LD_LIBRARY_PATH
 ADD android-emulator /usr/local/bin/android-emulator
+RUN android-emulator start
+RUN android-emulator stop
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
