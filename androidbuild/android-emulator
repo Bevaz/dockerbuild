@@ -4,7 +4,7 @@ PORT=5554
 
 start() {
      echo "Starting emulator using port $PORT..."
-     emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -no-window -port $PORT &
+     xvfb-run -s "+extension GLX" emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -port $PORT -qemu m 512 > /tmp/emul.log &
      wait
 }
 
@@ -18,11 +18,12 @@ wait() {
           boot_completed=`adb -e shell getprop sys.boot_completed 2>&1`
 	      echo "Read boot_completed property: <$boot_completed>"
           let "timeout += 1"
-          if [ $timeout -gt 60 ]; then
+          if [ $timeout -gt 300 ]; then
                echo "Failed to start emulator"
                exit 1
           fi
      done
+     adb shell input keyevent 82
 }
 
 case "$1" in
