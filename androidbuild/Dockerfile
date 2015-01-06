@@ -21,7 +21,7 @@ ENV ANDROID_HOME /opt/android-sdk-linux
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 RUN echo yes | android update sdk -u -a -t platform-tools,build-tools-21.1.2,android-14,sys-img-armeabi-v7a-android-14,android-21,sys-img-armeabi-v7a-android-21
  
-ENV ANDROID_AVD_HOME /opt/.android/avd/
+ENV ANDROID_AVD_HOME /root/.android/avd/
 RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M --abi armeabi-v7a
 
 ADD android-emulator /usr/local/bin/android-emulator
