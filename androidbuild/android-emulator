@@ -5,7 +5,7 @@ PORT=5554
 start() {
      echo "Starting emulator using port $PORT..."
 	 export LD_LIBRARY_PATH=$ANDROID_HOME/tools/lib:$LD_LIBRARY_PATH
-     xvfb-run -s "+extension GLX" emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -port $PORT -qemu m 512 > /tmp/emul.log &
+     xvfb-run -s "+extension GLX" emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -port $PORT -qemu m 512 &
      wait
 }
 
