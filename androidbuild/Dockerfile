@@ -25,7 +25,7 @@ ENV ANDROID_AVD_HOME /root/.android/avd/
 RUN android create avd --force -n emul-android-4.2 -t android-21 -d tv_1080p -c 512M --abi armeabi-v7a
 
 ADD android-emulator /usr/local/bin/android-emulator
-RUN android-emulator start && sleep 60 && android-emulator stop
+RUN android-emulator start && adb reboot -p && wait `pidof emulator64-arm`
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

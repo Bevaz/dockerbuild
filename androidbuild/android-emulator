@@ -40,6 +40,10 @@ stop)
      echo  "Stopping Android Emulator"
      kill `pidof emulator64-arm`
      ;;
+poweroff)
+     echo  "Powering off Android Emulator"
+     adb reboot -p
+     ;;
 *)
      echo "Usage $0 start|wait"
      ;;
