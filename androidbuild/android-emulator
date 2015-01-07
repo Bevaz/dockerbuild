@@ -2,10 +2,17 @@
 
 PORT=5554
 
-start() {
+start_window() {
      echo "Starting emulator using port $PORT..."
 	 export LD_LIBRARY_PATH=$ANDROID_HOME/tools/lib:$LD_LIBRARY_PATH
-     xvfb-run -s "+extension GLX" emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -port $PORT -qemu -m 512 &
+     xvfb-run -s "+extension GLX" emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -port $PORT -qemu -m 768 &
+     wait
+}
+
+start_no_window() {
+     echo "Starting emulator using port $PORT..."
+	 export LD_LIBRARY_PATH=$ANDROID_HOME/tools/lib:$LD_LIBRARY_PATH
+     emulator64-arm -avd emul-android-4.2 -gpu on -no-skin -no-audio -no-window -port $PORT -qemu -m 768 &
      wait
 }
 
@@ -19,7 +26,7 @@ wait() {
           boot_completed=`adb -e shell getprop sys.boot_completed 2>&1`
 	      echo "Read boot_completed property: <$boot_completed>"
           let "timeout += 1"
-          if [ $timeout -gt 300 ]; then
+          if [ $timeout -gt 500 ]; then
                echo "Failed to start emulator"
                exit 1
           fi
@@ -28,9 +35,16 @@ wait() {
 }
 
 case "$1" in
+start-window)
+     echo "Start Android Emulator in Window mode"
+     start_window
+     ;;
+start-no-window)
+     echo "Start Android Emulator in No-Window mode"
+     start_no_window
+     ;;
 start)
-     echo "Start Android Emulator"
-     start
+     start_no_window
      ;;
 wait)
      echo  "Wait for Android Emulator"
@@ -38,11 +52,11 @@ wait)
      ;;
 stop)
      echo  "Stopping Android Emulator"
-     kill `pidof emulator64-arm`
+     adb emu kill
      ;;
 poweroff)
      echo  "Powering off Android Emulator"
-     adb reboot -p
+     adb shell reboot -p
      ;;
 *)
      echo "Usage $0 start|wait"
