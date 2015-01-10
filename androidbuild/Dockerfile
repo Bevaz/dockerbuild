@@ -8,7 +8,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends so
 RUN echo | add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends p7zip-full unzip python-dev libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 wget ant oracle-java8-installer zlib1g-dev unzip libssl-dev libpcre3-dev zlib1g-dev libsqlite3-dev xvfb libguestfs-tools python-pip build-essential qemu-utils linux-image-generic git
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends p7zip-full unzip python-dev libstdc++6:i386 \
+    libgcc1:i386 zlib1g:i386 libncurses5:i386 wget ant oracle-java8-installer zlib1g-dev unzip libssl-dev libpcre3-dev \
+    libsqlite3-dev xvfb libguestfs-tools python-pip build-essential qemu-utils linux-image-generic git
 RUN pip install cython PIL --allow-external PIL --allow-unverified PIL
 
 WORKDIR /opt
